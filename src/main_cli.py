@@ -51,6 +51,11 @@ if __name__ == "__main__":
         "2": "Listar tareas pendientes",
         "3": "Salir",
     }
+    SECOND_CHOICES = {
+        "1": "Eliminar tarea",
+        "2": "Marcar tarea como completada",
+        "3": "Volver",
+    }
 
     while True:
         paint_display(FIRST_CHOICES)
@@ -61,7 +66,24 @@ if __name__ == "__main__":
             description = input("Descripción: ")
             task_service.add_task(name, description)
         elif choice == "2":
-            selected_task_id = show_tasks_and_get_choice()
+            task_id = show_tasks_and_get_choice()
+            if task_id:
+                while True:
+                    paint_display(SECOND_CHOICES)
+                    action_choice = input("Elige una opción: ")
+                    if action_choice == "1":
+                        task_service.delete_task(task_id)
+                        print("La tarea se eliminó")
+                        break
+                    elif action_choice == "2":
+                        task_service.mark_task_as_completed(task_id)
+                        print("Tarea completada")
+                        break
+                    elif action_choice == "3":
+                        break
+                    else:
+                        print("Opción incorrecta, ingresa un número")
+                    input("Presiona enter para continuar")
         elif choice == "3":
             break
         else:
