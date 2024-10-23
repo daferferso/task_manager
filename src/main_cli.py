@@ -17,6 +17,34 @@ def paint_display(choices):
         print(f"{key}. {value}")
 
 
+def show_tasks_and_get_choice():
+    while True:
+        clear_screen()
+        tasks = task_service.get_pending_tasks()
+        if not tasks:
+            print("No hay tareas pendientes.\n")
+            input("Presiona enter para continuar")
+            return None
+
+        print("Tareas Pendientes:")
+        for i, task in enumerate(tasks):
+            print(f"{i+1}. Nombre: {task['name']}")
+
+        try:
+            choice = int(input("Ingresa el número de la tarea o 0 para volver: "))
+            if choice == 0:
+                return None
+            elif 1 <= choice <= len(tasks):
+                selected_task = tasks[choice - 1]
+                return selected_task["id"]
+            else:
+                print("El número de la tarea no es válido")
+        except ValueError:
+            print("Opción incorrecta, ingresa un número")
+
+        input("Presiona enter para continuar")
+
+
 if __name__ == "__main__":
     FIRST_CHOICES = {
         "1": "Añadir tarea",
@@ -32,8 +60,10 @@ if __name__ == "__main__":
             name = input("Nombre: ")
             description = input("Descripción: ")
             task_service.add_task(name, description)
+        elif choice == "2":
+            selected_task_id = show_tasks_and_get_choice()
         elif choice == "3":
             break
         else:
             print("Opción incorrecta, intenta de nuevo")
-        input("Presiona cualquier tecla para continuar")
+        input("Presiona enter para continuar")
