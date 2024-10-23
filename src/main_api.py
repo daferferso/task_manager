@@ -46,6 +46,11 @@ def get_all_pending_tasks():
     return task_service.get_pending_tasks()
 
 
+@router.get("/{task_id}")
+def get_task(task_id):
+    return task_service.get_task(task_id)
+
+
 app.include_router(router)
 if __name__ == "__main__":
     uvicorn.run("main_api:app", host="127.0.0.1", port=8000, reload=True)
