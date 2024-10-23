@@ -1,3 +1,7 @@
+"""
+Capa externa - CLI
+"""
+
 import os
 from task.application.task_service import TaskService
 from task.infrastructure.task_repository_json import TaskRepositoryJson
@@ -7,10 +11,20 @@ task_service = TaskService(task_repository)
 
 
 def clear_screen():
+    """
+    Limpia la pantalla del terminal.
+    """
     os.system("cls" if os.name == "nt" else "clear")
 
 
 def paint_display(choices):
+    """
+    Muestra las opciones disponibles en el terminal.
+
+    Parámetros:
+        choices (dict): Un diccionario donde las claves son los números de opción
+        y los valores son las descripciones de las opciones.
+    """
     clear_screen()
     print("Opciones:")
     for key, value in choices.items():
@@ -18,6 +32,12 @@ def paint_display(choices):
 
 
 def show_tasks_and_get_choice():
+    """
+    Muestra las tareas pendientes y permite al usuario seleccionar una tarea.
+
+    Retorna:
+        str: ID de la tarea seleccionada o None si no se seleccionó ninguna.
+    """
     while True:
         clear_screen()
         tasks = task_service.get_pending_tasks()
