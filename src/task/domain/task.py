@@ -44,6 +44,6 @@ class Task:
 
     @completed.setter
     def completed(self, value: bool):
-        if self._completed and value:
+        if self._completed and value & value:
             raise TaskAlReadyCompletedError()
         self._completed = value
