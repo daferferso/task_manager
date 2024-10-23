@@ -1,8 +1,8 @@
 from typing import List
 from dataclasses import dataclass
-from src.task.domain.task import Task
-from src.task.domain.interfaces.task_repository import ITaskRepository
-from src.task.domain.task_errors import TaskNotFound
+from task.domain.task import Task
+from task.domain.interfaces.task_repository import ITaskRepository
+from task.domain.task_errors import TaskNotFound
 
 
 @dataclass
@@ -19,12 +19,13 @@ class TaskService:
         tasks: List[Task] = self._task_repository.get_tasks()
         pending_tasks = [
             {
+                "id": task.id,
                 "name": task.name,
                 "description": task.description,
                 "completed": task.completed,
             }
             for task in tasks
-            if task.completed
+            if not task.completed
         ]
         return pending_tasks
 
@@ -38,4 +39,5 @@ class TaskService:
         task: Task = self._task_repository.get_task(task_id)
         if not task:
             raise TaskNotFound()
+        task.completed = True
         self._task_repository.update_task(task_id, task)

@@ -1,6 +1,6 @@
 from uuid import uuid4
 from dataclasses import dataclass, field
-from task_errors import TaskAlReadyCompletedError
+from .task_errors import TaskAlReadyCompletedError
 
 
 @dataclass

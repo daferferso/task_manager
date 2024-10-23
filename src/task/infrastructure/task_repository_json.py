@@ -1,7 +1,7 @@
 import json
 from typing import List, Optional
-from src.task.domain.task import Task
-from src.task.domain.interfaces.task_repository import ITaskRepository
+from task.domain.task import Task
+from task.domain.interfaces.task_repository import ITaskRepository
 
 
 class TaskRepositoryJson(ITaskRepository):
@@ -26,12 +26,13 @@ class TaskRepositoryJson(ITaskRepository):
         for i, obj in enumerate(self._data):
             if obj.id == task_id:
                 self._data[i] = task
-                return
+                return self._save_data()
 
     def delete_task(self, task_id: str):
         for i, obj in enumerate(self._data):
             if obj.id == task_id:
-                return self._data.pop(i)
+                self._data.pop(i)
+                return self._save_data()
 
     def _load_data(self):
         try:
@@ -58,9 +59,9 @@ class TaskRepositoryJson(ITaskRepository):
         }
 
     def _convert_dict_to_task(self, task_dict: dict) -> Task:
-        return Task(
-            id=task_dict["id"],
-            name=task_dict["name"],
-            description=task_dict["description"],
-            completed=task_dict["completed"],
-        )
+        task = Task()
+        task.id = task_dict["id"]
+        task.name = task_dict["name"]
+        task.description = task_dict["description"]
+        task.completed = task_dict["completed"]
+        return task

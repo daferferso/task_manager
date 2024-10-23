@@ -1,6 +1,6 @@
 from typing import List, Optional
 from abc import ABC, abstractmethod
-from src.task.domain.task import Task
+from task.domain.task import Task
 
 
 class ITaskRepository(ABC):
