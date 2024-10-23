@@ -15,6 +15,12 @@ class TaskService:
         task.description = task_description
         self._task_repository.add_task(task)
 
+    def get_task(self, task_id: str):
+        task: Task = self._task_repository.get_task(task_id)
+        if not task:
+            raise TaskNotFound()
+        return task
+
     def get_pending_tasks(self):
         tasks: List[Task] = self._task_repository.get_tasks()
         pending_tasks = [
