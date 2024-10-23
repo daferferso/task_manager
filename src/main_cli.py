@@ -28,7 +28,11 @@ if __name__ == "__main__":
         paint_display(FIRST_CHOICES)
         choice = input("Elige una opción: ")
 
-        if choice == "3":
+        if choice == "1":
+            name = input("Nombre: ")
+            description = input("Descripción: ")
+            task_service.add_task(name, description)
+        elif choice == "3":
             break
         else:
             print("Opción incorrecta, intenta de nuevo")
